@@ -8079,7 +8079,7 @@ if Players2 and game.Players.LocalPlayer.Backpack:FindFirstChild(CheckGlove()) t
 	game.Players.LocalPlayer.Backpack:FindFirstChild(CheckGlove()).Parent = Players2
 end
 if Players2 and Players2:FindFirstChild("entered") then
-	root.CFrame = workspace["SafeBox"].S5.CFrame * (_G.Players1CloneHelp and CFrame.new(0,5,0) or CFrame.new(0,7,0))
+	root.CFrame = workspace["SafeBox"].S5.CFrame * (_G.Players1CloneHelp and CFrame.new(0,5,0) or CFrame.new(0,5,6.5))
 end
 if Players2 and Players2:FindFirstChild("entered") == nil then
 	root.CFrame = game.Workspace:FindFirstChild("Lobby"):FindFirstChild("Teleport1").CFrame
@@ -9059,10 +9059,14 @@ if not _G.Players1CloneHelp then
 	if Players2 and Players2:FindFirstChild("entered") then
 		if Players1 and Players1:FindFirstChild("entered") and Players1:FindFirstChild("Ragdolled") and Players1.Ragdolled.Value == false then
 			if (root and root1 and (root.Position - root1.Position).Magnitude or 0) < 50 then
-				game:GetService("ReplicatedStorage").ZeroGSound:FireServer()
+				game:GetService("ReplicatedStorage"):WaitForChild("ZeroGSound"):FireServer()
 				wait(0.3)
-				repeat task.wait() until root and root:FindFirstChild("ZeroGSoundEffect") == nil
-				gloveHits["Space"]:FireServer(root1)
+				for i = 1, 10 do
+					if root1 and root and root:FindFirstChild("ZeroGSoundEffect") then
+						gloveHits["Space"]:FireServer(root1)
+						task.wait(0.87)
+					end
+				end
 				wait(0.3)
 				repeat task.wait() until Players1 and Players1:FindFirstChild("entered") and Players1:FindFirstChild("Ragdolled") and Players1.Ragdolled.Value == false
 				task.wait(0.4)
