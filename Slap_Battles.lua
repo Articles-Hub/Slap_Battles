@@ -9059,8 +9059,10 @@ if not _G.Players1CloneHelp then
 	if Players2 and Players2:FindFirstChild("entered") then
 		if Players1 and Players1:FindFirstChild("entered") and Players1:FindFirstChild("Ragdolled") and Players1.Ragdolled.Value == false then
 			if (root and root1 and (root.Position - root1.Position).Magnitude or 0) < 50 then
-				game:GetService("ReplicatedStorage"):WaitForChild("ZeroGSound"):FireServer()
-				wait(0.3)
+				repeat task.wait()
+					game:GetService("ReplicatedStorage"):WaitForChild("ZeroGSound"):FireServer()
+				until _G.AutoSpaceMasteryHelp == false or root and root:FindFirstChild("ZeroGSoundEffect")
+				wait(0.65)
 				for i = 1, 10 do
 					if root1 and root and root:FindFirstChild("ZeroGSoundEffect") then
 						gloveHits["Space"]:FireServer(root1)
