@@ -8823,7 +8823,7 @@ if not _G.Players1CloneHelp then
 					repeat task.wait() until Players1 and Players1:FindFirstChild("entered") and Players1:FindFirstChild("Ragdolled") and Players1.Ragdolled.Value == false
 					wait(0.3)
 					game:GetService("ReplicatedStorage"):WaitForChild("SpringJump"):FireServer()
-					root.CFrame = workspace["SafeBox"].S5.CFrame * CFrame.new(0,20,5))
+					root.CFrame = workspace["SafeBox"].S5.CFrame * CFrame.new(0,20,5)
 					task.wait(0.9)
 				end
 			end
