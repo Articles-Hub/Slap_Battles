@@ -8791,7 +8791,7 @@ if not _G.Players1CloneHelp then
 			if root and root:FindFirstChild("HelpMasteryFreezeBv") then
 				root:FindFirstChild("HelpMasteryFreezeBv").Velocity = (s - root.Position).Unit * 50
 			end
-		until not root:FindFirstChild("HelpMasteryFreezeBv") or (s and root and (root.Position - s.Position).Magnitude < 5)
+		until not root:FindFirstChild("HelpMasteryFreezeBv") or (s and root and (root.Position - s).Magnitude < 5)
 		if root and root:FindFirstChild("HelpMasteryFreezeBv") then
 			root:FindFirstChild("HelpMasteryFreezeBv").Velocity = Vector3.new(0, 0, 0)
 		end
