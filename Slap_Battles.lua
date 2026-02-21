@@ -755,8 +755,6 @@ function findGroup(maxDist, groupSize)
 	return nil
 end
 
-
-
 ---SafeSpotSpace---
 
 if workspace:FindFirstChild("SafeBoxSpace") == nil then
@@ -8745,6 +8743,99 @@ elseif Value == true then
 Notification("You don't have Obby equipped", _G.TimeNotify)
 wait(0.05)
 Toggles["Auto Mastery Obby"]:SetValue(false)
+end
+    end
+})
+
+Badge4Group:AddDropdown("Spring Mastery", {
+    Text = "Spring Mastery",
+    Values = {"Jump Over Clone", "Evade Clone", "Jump Land 2 Sec Clone"},
+    Default = "",
+    Multi = false,
+    Callback = function(Value)
+_G.SpringMasteryHelp = Value
+    end
+})
+
+Badge4Group:AddToggle("Auto Mastery Spring", {
+    Text = "Auto Mastery Spring",
+    Default = false, 
+    Callback = function(Value) 
+_G.AutoSpringMasteryHelp = Value
+if not _G.AutoSpringMasteryHelp then
+	if game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("HelpMasteryFreezeBv") then
+		game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("HelpMasteryFreezeBv"):Destroy()
+	end
+end
+if _G.Players1CloneHelp or CheckGlove() == "Spring" then
+while _G.AutoSpringMasteryHelp do
+if root and root:FindFirstChild("HelpMasteryFreezeBv") == nil then
+	local bv = Instance.new("BodyVelocity")
+	bv.Name = "HelpMasteryFreezeBv"
+	bv.Parent = root
+	bv.MaxForce = Vector3.new(100000, 100000, 100000)
+	bv.Velocity = Vector3.new(0, 0, 0)
+end
+if Players2 and game.Players.LocalPlayer.Backpack:FindFirstChild(CheckGlove()) then
+	game.Players.LocalPlayer.Backpack:FindFirstChild(CheckGlove()).Parent = Players2
+end
+if Players2 and Players2:FindFirstChild("entered") then
+	root.CFrame = workspace["SafeBox"].S5.CFrame * (_G.Players1CloneHelp and CFrame.new(0,4,0) or CFrame.new(0,4,-5))
+end
+if Players2 and Players2:FindFirstChild("entered") == nil then
+	root.CFrame = game.Workspace:FindFirstChild("Lobby"):FindFirstChild("Teleport1").CFrame
+end
+if not _G.Players1CloneHelp then
+	local function BVTweenHelp(s)
+		repeat task.wait()
+			if root and root:FindFirstChild("HelpMasteryFreezeBv") then
+				root:FindFirstChild("HelpMasteryFreezeBv").Velocity = (s - root.Position).Unit * 50
+			end
+		until not root:FindFirstChild("HelpMasteryFreezeBv") or (s and root and (root.Position - s.Position).Magnitude < 5)
+		if root and root:FindFirstChild("HelpMasteryFreezeBv") then
+			root:FindFirstChild("HelpMasteryFreezeBv").Velocity = Vector3.new(0, 0, 0)
+		end
+	end
+	if Players2 and Players2:FindFirstChild("entered") then
+		if Players1 and Players1:FindFirstChild("entered") and Players1:FindFirstChild("Ragdolled") and Players1.Ragdolled.Value == false then
+			if (root and root1 and (root.Position - root1.Position).Magnitude or 0) < 100 then
+				if _G.SpringMasteryHelp == "Jump Over Clone" or _G.SpringMasteryHelp == "Jump Land 2 Sec Clone" then
+					repeat task.wait()
+						game:GetService("ReplicatedStorage"):WaitForChild("SpringJump"):FireServer()
+					until char and char:FindFirstChild("JumpSoundDB")
+					BVTweenHelp(workspace["SafeBox"].S5.Position + Vector3.new(0, 25, 0))
+					spawn(function()
+						if root1 then
+							BVTweenHelp(root1.Position + Vector3.new(0, -2.6, -5))
+						end
+					end)
+					repeat task.wait() until char and char:FindFirstChildOfClass("Humanoid") and char:FindFirstChildOfClass("Humanoid"):GetState() == Enum.HumanoidStateType.Landed
+					root.CFrame = workspace["SafeBox"].S5.CFrame * CFrame.new(0,4,5)
+					wait(0.36)
+					if _G.SpringMasteryHelp == "Jump Land 2 Sec Clone" then task.wait(1.4) end
+					gloveHits["Spring"]:FireServer(root1)
+					wait(0.3)
+					repeat task.wait() until Players1 and Players1:FindFirstChild("entered") and Players1:FindFirstChild("Ragdolled") and Players1.Ragdolled.Value == false
+					task.wait(0.6)
+				elseif _G.SpringMasteryHelp == "Evade Clone" then
+					gloveHits["Spring"]:FireServer(root1)
+					wait(0.3)
+					repeat task.wait() until Players1 and Players1:FindFirstChild("entered") and Players1:FindFirstChild("Ragdolled") and Players1.Ragdolled.Value == false
+					wait(0.3)
+					game:GetService("ReplicatedStorage"):WaitForChild("SpringJump"):FireServer()
+					root.CFrame = workspace["SafeBox"].S5.CFrame * CFrame.new(0,20,5))
+					task.wait(0.9)
+				end
+			end
+		end
+	end
+end
+task.wait()
+end
+elseif Value == true then
+Notification("You don't have Spring equipped", _G.TimeNotify)
+wait(0.05)
+Toggles["Auto Mastery Spring"]:SetValue(false)
 end
     end
 })
